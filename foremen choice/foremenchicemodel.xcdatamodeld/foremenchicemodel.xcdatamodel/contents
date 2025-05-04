@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Chitgroup" representedClassName="Chitgroup" syncable="YES">
+        <attribute name="chitvalue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="commissionpercentage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="startdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="subscribercount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="installments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Installment" inverseName="chitgroup" inverseEntity="Installment"/>
+        <relationship name="subscribers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subscriber" inverseName="chitgroup" inverseEntity="Subscriber"/>
+    </entity>
+    <entity name="Installment" representedClassName="Installment" syncable="YES">
+        <attribute name="duedate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="monthnumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="chitgroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chitgroup" inverseName="installments" inverseEntity="Chitgroup"/>
+        <relationship name="payments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Installmentpayment" inverseName="installment" inverseEntity="Installmentpayment"/>
+        <fetchedProperty name="fetchedProperty" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Installment"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="Installmentpayment" representedClassName="Installmentpayment" syncable="YES">
+        <attribute name="amountpaid" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="paymentdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="installment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Installment" inverseName="payments" inverseEntity="Installment"/>
+        <relationship name="subscriber" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subscriber" inverseName="payments" inverseEntity="Subscriber"/>
+    </entity>
+    <entity name="Subscriber" representedClassName="Subscriber" syncable="YES">
+        <attribute name="adress" optional="YES" attributeType="String"/>
+        <attribute name="chitnumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phonenumber" optional="YES" attributeType="String"/>
+        <relationship name="chitgroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chitgroup" inverseName="subscribers" inverseEntity="Chitgroup"/>
+        <relationship name="payments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Installmentpayment" inverseName="subscriber" inverseEntity="Installmentpayment"/>
+    </entity>
+</model>
